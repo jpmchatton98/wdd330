@@ -2,8 +2,24 @@
 <html>
 	<head>
 		<title>Story Editor</title>
-		<script src="story_editor.js">
-			
+		<script>		
+			function loadStory()
+			{
+				var storyName = document.getElementById("storyName").value;
+				var storyHTML = localStorage.getItem(storyName);
+				document.getElementById("story").value = storyHTML;
+			}
+			function saveStory()
+			{
+				var storyName = document.getElementById("storyName").value;
+				var storyHTML = document.getElementById("story").value;
+				localStorage.setItem(storyName, storyHTML);
+			}
+			function displayStory()
+			{
+				var storyHTML = document.getElementById("story").value;
+				document.getElementById("storyDisplay").innerHTML = storyHTML;
+			}
 		</script>
 	</head>
 	<body>
@@ -13,11 +29,11 @@
 		<br>
 		<textarea id="story"></textarea>
 		<br><br>
-		<button onClick="loadStory">Load</button>
+		<button onclick="loadStory()">Load</button>
 		<br>
-		<button onClick="saveStory">Save</button>
+		<button onclick="saveStory()">Save</button>
 		<br>
-		<button onClick="displayStory">Display</button>
+		<button onclick="displayStory()">Display</button>
 		
 		<br>
 		<br>
