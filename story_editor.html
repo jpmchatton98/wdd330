@@ -2,39 +2,23 @@
 <html>
 	<head>
 		<title>Story Editor</title>
-		<script>
-			function loadStory()
-			{
-				var storyName = document.getElementById("storyName").value';
-				var storyHTML = localStorage.getItem(storyName);
-				document.getElementById("story").value = storyHTML;
-			}
-			function saveStory()
-			{
-				var storyName = document.getElementById("storyName").value';
-				var storyHTML = document.getElementById("story").value';
-				localStorage.setItem(storyName, storyHTML);
-			}
-			function displayStory()
-			{
-				var storyHTML = document.getElementById("story").value';
-				document.getElementById("storyDisplay").innerHTML = storyHTML;
-			}
+		<script src="story_editor.js">
+			
 		</script>
 	</head>
 	<body>
 		<h1>Story Editor</h1>
-		<form>
-			Story Name <input type="text" id="storyName" name="storyName">
-			<br>
-			<textarea id="story"></textarea>
-			<br><br>
-			<button onClick="loadStory">Load</button>
-			<br>
-			<button onClick="saveStory">Save</button>
-			<br>
-			<button onClick="displayStory">Display</button>
-		</form>
+		
+		Story Name <input type="text" id="storyName" name="storyName">
+		<br>
+		<textarea id="story"></textarea>
+		<br><br>
+		<button onClick="loadStory">Load</button>
+		<br>
+		<button onClick="saveStory">Save</button>
+		<br>
+		<button onClick="displayStory">Display</button>
+		
 		<br>
 		<br>
 		<div id="storyDisplay"></div>
