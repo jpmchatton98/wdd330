@@ -1,9 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>title</title>
-  </head>
-  <body>
-    
-  </body>
+	<head>
+		<title>Array Reverse</title>
+		<script>
+			function arrayReverse(inputArray)
+			{
+				var outputArray = [];
+				
+				var counter = 0;
+				for(var i = inputArray.length - 1; i >= 0; i--)
+				{
+					outputArray[counter] = inputArray[i];
+					counter++;
+				}
+				
+				return outputArray;
+			}
+			
+			function arrayReverseInPlace(inputArray)
+			{
+				var counter = 0;
+				for(var i = inputArray.length - 1; i > (inputArray.length / 2) - 1; i--)
+				{
+					var holder = inputArray[i];
+					inputArray[i] = inputArray[counter];
+					inputArray[counter] = holder;
+					
+					counter++;
+				}
+				
+				return inputArray;
+			}
+			
+			function main()
+			{
+				var array = ["a", "b", "c", "d", "e"];
+				
+				console.log(array);
+				array = arrayReverse(array);
+				console.log(array);
+				
+				array = [1, 2, 3, 4, 5];
+				
+				console.log(array);
+				array = arrayReverseInPlace(array);
+				console.log(array);
+			}
+		</script>
+	</head>
+	<body>
+		<button onClick="main()">Reverse Array</button>
+	</body>
 </html>
