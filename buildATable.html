@@ -1,21 +1,62 @@
 <!doctype html>
+<html>
+	<head>
+		<title>Build A Table</title>
+		<script>
+			function buildTable()
+			{
+				const MOUNTAINS = 
+				[
+					{name: "Kilimanjaro", height: 5895, place: "Tanzania"},
+					{name: "Everest", height: 8848, place: "Nepal"},
+					{name: "Mount Fuji", height: 3776, place: "Japan"},
+					{name: "Vaalserberg", height: 323, place: "Netherlands"},
+					{name: "Denali", height: 6168, place: "United States"},
+					{name: "Popocatepetl", height: 5465, place: "Mexico"},
+					{name: "Mont Blanc", height: 4808, place: "Italy/France"}
+				];
 
-<body>
-<h1>Mountains</h1>
+				const mountainDiv = document.getElementById("mountains");
+				  
+				var table = document.createElement("table");
+				mountainDiv.appendChild(table);
+				
+				table.insertRow();
+				
+				addCell(table.rows[0], "<b>Mountain Name</b>");
+				addCell(table.rows[0], "<b>Height (Meters)</b>");
+				addCell(table.rows[0], "<b>Location</b>");
+				
+				for(var i = 0; i < MOUNTAINS.length; i++)
+				{
+					table.insertRow();
+					for(const key in MOUNTAINS[i])
+					{
+						addCell(table.rows[i + 1], MOUNTAINS[i][key]);
+					}
+				}
+			}
+			
+			function addCell(tableRow, cellContents)
+			{
+				var cell = document.createElement("td");
+				cell.innerHTML = cellContents;
+				tableRow.appendChild(cell);
+			}
+		</script>
+		
+		<style>
+			table, th, td
+			{
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Mountains</h1>
+		<button onClick="buildTable()">Build Table</button>
+		<div id="mountains"></div>
 
-<div id="mountains"></div>
-
-<script>
-  const MOUNTAINS = [
-    {name: "Kilimanjaro", height: 5895, place: "Tanzania"},
-    {name: "Everest", height: 8848, place: "Nepal"},
-    {name: "Mount Fuji", height: 3776, place: "Japan"},
-    {name: "Vaalserberg", height: 323, place: "Netherlands"},
-    {name: "Denali", height: 6168, place: "United States"},
-    {name: "Popocatepetl", height: 5465, place: "Mexico"},
-    {name: "Mont Blanc", height: 4808, place: "Italy/France"}
-  ];
-
-  // Your code here
-</script>
-</body>
+		
+	</body>
+</html>
