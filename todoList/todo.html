@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>To-Do List</title>
+		<link rel="stylesheet" href="todo.css" type="text/css">
+		<script src="todo.js"></script>
+	</head>
+	<body onLoad="startup()">
+		<button onClick="addItem()">Add Item</button>
+		<input type="text" id="newItem" oninput="removeWarning()">
+		<span id="warning" style="color:red"></span>
+		<br>
+		<button onClick="allFilter()">All</button>
+		<button onClick="completeFilter()">Complete</button>
+		<button onClick="incompleteFilter()">Incomplete</button>
+		<br>
+		<table id="list"></table>
+	</body>
+</html>
