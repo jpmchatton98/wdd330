@@ -1,10 +1,40 @@
 var toDoList;
 var list;
+var storage;
+
+var filter;
 
 function startup()
 {
-	toDoList = [];
+	storage = window.localStorage;
 	list = document.getElementById("list");
+	toDoList = [];
+	filter = 0;
+	
+	var jsonList = storage.getItem("list");
+	if(jsonList != null)
+	{
+		toDoList = JSON.parse(jsonList);
+		
+		allFilter();
+	}
+	
+	var input = document.getElementById("newItem");
+	input.addEventListener("keyup", function(e)
+						   {
+								if(e.keyCode === 13)
+								{
+									e.preventDefault();
+									document.getElementById("submit").click();
+								}
+						   });
+}
+
+function saveList()
+{
+	var jsonList = JSON.stringify(toDoList);
+	
+	storage.setItem("list", jsonList);
 }
 
 class toDo
@@ -15,17 +45,76 @@ class toDo
 		this.timestamp = new Date().getTime();
 		this.completed = false;
 	}
-	
-	complete()
-	{
-		this.completed = !this.completed;
-	}
 }
 
 function removeWarning()
 {
 	document.getElementById("warning").innerHTML = "";
 }
+
+function clearList()
+{
+	if(list.rows.length > 0)
+	{
+		for(var i = list.rows.length - 1; i >= 0; i--)
+		{
+			list.deleteRow(i);
+		}
+	}
+	
+	localStorage.clear();
+	
+	toDoList = [];
+}
+
+function clearTable()
+{
+	if(list.rows.length > 0)
+	{
+		for(var i = list.rows.length - 1; i >= 0; i--)
+		{
+			list.deleteRow(i);
+		}
+	}
+}
+
+function allFilter()
+{
+	clearTable();
+	
+	for(var i = 0; i < toDoList.length; i++)
+	{
+		addExistingItem(toDoList[i].content, toDoList[i].completed);
+	}
+	filter = 0;
+}
+function completeFilter()
+{
+	clearTable();
+	
+	for(var i = 0; i < toDoList.length; i++)
+	{
+		if(toDoList[i].completed)
+		{
+			addExistingItem(toDoList[i].content, toDoList[i].completed);
+		}
+	}
+	filter = 1;
+}
+function incompleteFilter()
+{
+	clearTable();
+	
+	for(var i = 0; i < toDoList.length; i++)
+	{
+		if(!toDoList[i].completed)
+		{
+			addExistingItem(toDoList[i].content, toDoList[i].completed);
+		}
+	}
+	filter = 2;
+}
+
 function addItem()
 {
 	var newItemBox = document.getElementById("newItem");
@@ -44,13 +133,13 @@ function addItem()
 	{
 		var newItem = new toDo(newItemContent);
 		
-		var newRow = list.insertRow(toDoList.length);
-		newRow.insertCell(0).innerHTML = "<button id=" + newItem.content + "Complete" + ">O</button>";
-		newRow.insertCell(1).innerHTML = "<div id=" + newItem.content + "Content" + ">" + newItem.content + "</div>";
-		newRow.insertCell(2).innerHTML = "<button id=" + newItem.content + "Delete" + ">Delete</button>";
+		var newRow = list.insertRow(list.rows.length);
+		newRow.insertCell(0).innerHTML = "<button id=" + newItem.content.replace(" ", "") + "Complete" + ">O</button>";
+		newRow.insertCell(1).innerHTML = "<div id=" + newItem.content.replace(" ", "") + "Content" + ">" + newItem.content + "</div>";
+		newRow.insertCell(2).innerHTML = "<button id=" + newItem.content.replace(" ", "") + "Delete" + ">Delete</button>";
 		
-		var newItemComplete = document.getElementById(newItem.content + "Complete");
-		var newItemDelete = document.getElementById(newItem.content + "Delete");
+		var newItemComplete = document.getElementById(newItem.content.replace(" ", "") + "Complete");
+		var newItemDelete = document.getElementById(newItem.content.replace(" ", "") + "Delete");
 		
 		newItemComplete.addEventListener("click", completeItem);
 		newItemDelete.addEventListener("click", deleteItem);
@@ -60,11 +149,59 @@ function addItem()
 		newItemBox.value = "";
 		
 		document.getElementById("warning").innerHTML = "";
+		
+		if(filter == 0)
+		{
+			allFilter();
+		}
+		else if(filter == 1)
+		{
+			completeFilter();
+		}
+		else
+		{
+			incompleteFilter();
+		}
 	}
 	else
 	{
 		document.getElementById("warning").innerHTML = "Item Already Exists";
 	}
+	
+	saveList();
+}
+
+function addExistingItem(itemContent, complete)
+{	
+	var newRow = list.insertRow(list.rows.length);
+	if(!complete)
+	{
+		newRow.insertCell(0).innerHTML = "<button id=" + itemContent.replace(" ", "") + "Complete" + ">O</button>";
+	}
+	else
+	{
+		newRow.insertCell(0).innerHTML = "<button id=" + itemContent.replace(" ", "") + "Complete" + ">Ø</button>";
+	}
+	
+	newRow.insertCell(1).innerHTML = "<div id=" + itemContent.replace(" ", "") + "Content" + ">" + itemContent + "</div>";
+	newRow.insertCell(2).innerHTML = "<button id=" + itemContent.replace(" ", "") + "Delete" + ">Delete</button>";
+	
+	var contentStyle = document.getElementById(itemContent.replace(" ", "") + "Content").style;
+	
+	if(!complete)
+	{
+		contentStyle.textDecoration = "";
+	}
+	else
+	{
+		contentStyle.textDecoration = "line-through";
+	}
+	
+	var newItemComplete = document.getElementById(itemContent.replace(" ", "") + "Complete");
+	var newItemDelete = document.getElementById(itemContent.replace(" ", "") + "Delete");
+	
+	newItemComplete.addEventListener("click", completeItem);
+	newItemDelete.addEventListener("click", deleteItem);
 }
 
 function completeItem(e)
@@ -76,7 +213,7 @@ function completeItem(e)
 	var item = null;
 	for(var i = 0; i < toDoList.length; i++)
 	{
-		if(toDoList[i].content === itemName)
+		if(toDoList[i].content.replace(" ", "") === itemName)
 		{
 			item = toDoList[i];
 			break;
@@ -87,6 +224,8 @@ function completeItem(e)
 	{
 		return -1;
 	}
+	
+	item.completed = !item.completed;
 	
 	if(button.innerHTML == "O")
 	{
@@ -108,7 +247,7 @@ function completeItem(e)
 		contentStyle.textDecoration = "";
 	}
 	
-	item.complete();
+	saveList();
 }
 
 function deleteItem(e)
@@ -121,4 +260,6 @@ function deleteItem(e)
 	row.parentElement.parentElement.deleteRow(rowIndex);
 	
 	toDoList.splice(rowIndex, 1);
+	
+	saveList();
 }

@@ -7,14 +7,29 @@
 		<script src="todo.js"></script>
 	</head>
 	<body onLoad="startup()">
-		<button onClick="addItem()">Add Item</button>
-		<input type="text" id="newItem" oninput="removeWarning()">
+		<h2>To-Do List</h2>
+		
 		<span id="warning" style="color:red"></span>
 		<br>
-		<button onClick="allFilter()">All</button>
-		<button onClick="completeFilter()">Complete</button>
-		<button onClick="incompleteFilter()">Incomplete</button>
+		
+		<!-- Item Addition Controls -->
+		<input type="text" id="newItem" oninput="removeWarning()">
+		<button id="submit" onClick="addItem()">Add Item</button>
 		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		
+		<!-- Filter Controls -->
+		<button onClick="allFilter()" id="all">All</button>
+		<button onClick="completeFilter()" id="complete">Complete</button>
+		<button onClick="incompleteFilter()" id="incomplete">Incomplete</button>
+		
+		<!-- Clear Button -->
+		<button onClick="clearList()" id="clear">Clear</button>
+		<br>
+		
 		<table id="list"></table>
 	</body>
 </html>

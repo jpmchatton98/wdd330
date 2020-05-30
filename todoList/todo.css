@@ -1,0 +1,42 @@
+body
+{
+	font-variant: small-caps;
+}
+
+button
+{
+	background-color: black;
+	color: white;
+	font-variant: small-caps;
+	
+	height: 10vw;
+	width: 10vw;
+}
+#newItem
+{
+	float: left;
+	height: 10vw;
+	width: 80vw;
+	font-size: 30px;
+	font-variant: small-caps;
+	margin-right: 2.3vw;
+}
+
+#all, #complete, #incomplete, #clear
+{
+	height: 10vw;
+	width: 20vw;
+	
+	margin-right: 4vw;
+}
+
+div
+{
+	width: 72vw;
+	font-size: 30px;
+}
+h2
+{
+	text-align: center;
+	border-bottom: 5px solid black;
+}
