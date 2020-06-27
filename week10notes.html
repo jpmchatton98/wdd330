@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<title>Week 10 Notes</title>
+	</head>
+	<body>
+		<h2>Client-Side Validation</h2>
+		<ul>
+			<li>Used to ensure forms are filled out correctly</li>
+			<li>Get the right data in the right format</li>
+			<li>Protect user's data</li>
+			<li>Protect ourselves against malicious users</li>
+			<li>Done through built-in form validation or manual JavaScript</li>
+			<h3>Built-In Validation</h3>
+			<li>Various html tags</li>
+			<ul>
+				<li>Required - field is required</li>
+				<li>Minlength - minimum input length</li>
+				<li>Maxlength - maximum input length</li>
+				<li>Min - minimum number input</li>
+				<li>Max - maximum number input</li>
+				<li>Type - constrained input (number, text, date, etc)</li>
+				<li>Pattern - regular expressions to filter data</li>
+			</ul>
+			<li>Valid elements have the :valid CSS class</li>
+			<li>Invalid elements have the :invalid CSS class, and sometimes others, such as :outofrange</li>
+			<h4>Regular Expressions</h4>
+			<li>a - matches one character that is a</li>
+			<li>abc - matches a, followed by b, followed by c</li>
+			<li>ab?c - matches a, optionally followed by a single b, followed by c</li>
+			<li>ab*c - matches a, optionally followed by any number of b's, followed by c</li>
+			<li>a|b - matches one character that is a or b</li>
+			<li>abc|xyz - matches exactly abc or xyz</li>
+			<h3>Javascript Validation</h3>
+			<li>HTMLButtonElement - button</li>
+			<li>HTMLFieldSetElement - fieldset</li>
+			<li>HTMLInputElement - input</li>
+			<li>HTMLOutputElement - output</li>
+			<li>HTMLSelectElement - select</li>
+			<li>HTMLTextAreaElement - textarea</li>
+			<h4>Constraint API Properties</h4>
+			<li>validationMessage - returns a message describing the validation constraints</li>
+			<li>validity - returns a ValidityState object that contains several properties</li>
+			<ul>
+				<li>patternMismatch - returns true if the result doesn't match the pattern</li>
+				<li>tooLong - returns true if the result is too long</li>
+				<li>tooShort - returns true if the result is too short</li>
+				<li>rangeOverflow - returns true if the number result is too big</li>
+				<li>rangeUnderflow - returns true if the number result is too small</li>
+				<li>typeMismatch - returns true if the result isn't the correct type, for use with email and url types</li>
+				<li>valid - returns true if result meets all validation constraints</li>
+				<li>valueMissing - returns true if the result is empty and the required tag is true</li>
+			</ul>
+			<li>willValidate - returns true if the result will be validated on form submit</li>
+			<li>checkValidity() - returns true if the result is valid</li>
+			<li>setCustomValidity(message) sets a custom error message</li>
+		</ul>
+		<h2>Fetch</h2>
+		<ul>
+			<li>Allows one to manipulate the HTTP pipeline</li>
+			<li>Replaces XMLHttpRequest</li>
+			<li>Returns a Promise</li>
+			<li>Return's ok property will be set to false if the status is 404 or 500</li>
+			<li>Can receive cross-site cookies</li>
+			<li>Won't send cookies unless you set the credentials property</li>
+			<li>Can optionally accept an init funciton as a parameter</li>
+			<li>Can be used to send JSON data</li>
+			<li>Can be used to upload a file</li>
+			<li>Can process a text file line by line</li>
+			<li>The response's ok property can be used to check validity</li>
+			<li>Request constructor can be used for custom requests</li>
+			<li>Functionality exists for modifying headers, bodies, response objects, and for feature detection and polyfill</li>
+		</ul>
+	</body>
+</html>
