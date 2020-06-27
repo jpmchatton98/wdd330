@@ -1,6 +1,6 @@
 // Example of using Classes and modules to organize the code needed to render our list of hikes. Not using MVC here.
 
-class comment
+class Comment
 {
   constructor(name, text, type)
   {
@@ -83,6 +83,9 @@ export default class Hikes
     const hike = this.getHikeByName(hikeName);
     this.parentElement.innerHTML = '';
     this.parentElement.appendChild(renderOneHikeFull(hike));
+    
+    document.getElementById("submitComment").addEventListener("click", submitComment);
+    
     // show the back button
     this.backButton.classList.remove('hidden');
   }
@@ -92,12 +95,9 @@ export default class Hikes
     // We need to loop through the children of our list and attach a listener to each, remember though that children is a nodeList...not an array. So in order to use something like a forEach we need to convert it to an array.
     const childrenArray = Array.from(this.parentElement.children);
     
-    console.log(12);
-    console.log(childrenArray);
-    
     for(var i = 0; i < childrenArray.length; i++)
     {
-      child.addEventListener('touchend', e => {
+      childrenArray[i].addEventListener('click', e => {
         // why currentTarget instead of target?
         this.showOneHike(e.currentTarget.dataset.name);
       });
@@ -108,7 +108,7 @@ export default class Hikes
   {
     const backButton = document.createElement('button');
     backButton.innerHTML = '&lt;- All Hikes';
-    backButton.addEventListener('touchend', () => {
+    backButton.addEventListener('click', () => {
       this.showHikeList();
     });
     backButton.classList.add('hidden');
@@ -151,7 +151,7 @@ function renderOneHikeFull(hike)
   item.innerHTML = ` 
     
         <img src="${imgBasePath}${hike.imgSrc}" alt="${hike.imgAlt}">
-        <h2>${hike.name}</h2>
+        <h2 id="name">${hike.name}</h2>
         <div>
             <h3>Distance</h3>
             <p>${hike.distance}</p>
@@ -168,7 +168,62 @@ function renderOneHikeFull(hike)
             <h3>How to get there</h3>
             <p>${hike.directions}</p>
         </div>
-    
+        <input type="text" id="commentBox">
+        <button id="submitComment">Submit Comment</button>
+        <div id="comments"></div>
     `;
+  
   return item;
+}
+
+function submitComment()
+{
+  var hikeName = document.getElementById("name").innerHTML;
+  
+  var hike = 0;
+  for(var i = 0; i < 3; i++)
+  {
+    if(hikeList[i].name == hikeName)
+    {
+      hike = hikeList[i];
+      break;
+    }
+  }
+  
+  if(!hike.hasOwnProperty("comments"))
+  {
+    hike.comments = [];
+  }
+  
+  var comment = document.getElementById("commentBox").value;
+  hike.comments[hike.comments.length] = new Comment(hikeName, comment, "hike");
+  
+  console.log(hike.comments);
+  
+  displayComments();
+}
+
+function displayComments()
+{
+  var hikeName = document.getElementById("name").innerHTML;
+  
+  var hike = 0;
+  for(var i = 0; i < 3; i++)
+  {
+    if(hikeList[i].name == hikeName)
+    {
+      hike = hikeList[i];
+      break;
+    }
+  }
+  
+  var comments = document.getElementById("comments");
+  
+  for(var j = 0; j < hike.comments.length; j++)
+  {    
+    comments.innerHTML = `
+                         <div>${hike.comments[j].text}</div>
+                         <div>${hike.comments[j].timestamp}</div>
+                         `;
+  }
 }
