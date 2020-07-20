@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Pokemon Team Builder</title>
+		<link rel="stylesheet" href="styles.css" type="text/css">
+		<script src="main.js"></script>
+	</head>
+	<body onLoad="getPokemon()">
+		<div id="pokemonList" style="display:none"></div>
+		<div id="types" style="display:none"></div>
+		<div id="singlePokemon" style="display:none"></div>
+		<div id="pokedex" style="display:none"></div>
+		
+		<h1><center>Pokemon Team Builder</center></h1>
+		<hr>
+		
+		<div id="teamArea">
+			<div id="team">
+				<span class="teamMember"><img id="0img" onClick="removeFromTeam(0)" src="./art/bulbasaur.png" style="opacity: 0" class="member"></span>
+				<span class="teamMember"><img id="1img" onClick="removeFromTeam(1)" src="./art/bulbasaur.png" style="opacity: 0" class="member"></span>
+				<span class="teamMember"><img id="2img" onClick="removeFromTeam(2)" src="./art/bulbasaur.png" style="opacity: 0" class="member"></span>
+				<span class="teamMember"><img id="3img" onClick="removeFromTeam(3)" src="./art/bulbasaur.png" style="opacity: 0" class="member"></span>
+				<span class="teamMember"><img id="4img" onClick="removeFromTeam(4)" src="./art/bulbasaur.png" style="opacity: 0" class="member"></span>
+				<span class="teamMember"><img id="5img" onClick="removeFromTeam(5)" src="./art/bulbasaur.png" style="opacity: 0" class="member"></span>
+			</div>
+			
+			<div id="pokeballs">
+				<img src="./pokeball.png" class="pokeball">
+				<img src="./pokeball.png" class="pokeball">
+				<img src="./pokeball.png" class="pokeball">
+				<img src="./pokeball.png" class="pokeball">
+				<img src="./pokeball.png" class="pokeball">
+				<img src="./pokeball.png" class="pokeball">
+			</div>
+		</div>
+		
+		<div id="main">
+			<hr>
+			<select id="pokedexSelect" onChange="selectDex()">
+				<option value="national">National</option>
+				<option value="original-kanto" selected>RBGY</option>
+				<option value="original-johto">GSC</option>
+				<option value="hoenn">RSE</option>
+				<option value="kanto">FRLG</option>
+				<option value="original-sinnoh">DP</option>
+				<option value="extended-sinnoh">Pt</option>
+				<option value="updated-johto">HGSS</option>
+				<option value="original-unova">BW</option>
+				<option value="updated-unova">B2W2</option>
+				<option value="kalos">XY</option>
+				<option value="updated-hoenn">ORAS</option>
+				<option value="original-alola">SM</option>
+				<option value="updated-alola">USUM</option>
+				<option value="kanto">Let's Go</option>
+			</select>
+			
+			<select id="typeSelect" onChange="formatList()">
+				<option value="0"></option>
+				<option value="1">normal</option>
+				<option value="2">fighting</option>
+				<option value="3">flying</option>
+				<option value="4">poison</option>
+				<option value="5">ground</option>
+				<option value="6">rock</option>
+				<option value="7">bug</option>
+				<option value="8">ghost</option>
+				<option value="9">steel</option>
+				<option value="10">fire</option>
+				<option value="11">water</option>
+				<option value="12">grass</option>
+				<option value="13">electric</option>
+				<option value="14">psychic</option>
+				<option value="15">ice</option>
+				<option value="16">dragon</option>
+				<option value="17">dark</option>
+				<option value="18">fairy</option>
+			</select>
+			<hr>
+			<center>
+				<button onClick="saveTeam()">Save Team</button>
+				<input type="text" id="teamName">
+				<button onClick="loadTeam()">Load Team</button>
+				<br>
+				<button onClick="deleteTeam()">Delete Team</button>
+				<button onClick="clearTeams()">Delete All Saved Teams</button>
+			</center>
+			<hr>
+			<div id="masterList"></div>
+		</div>
+	</body>
+</html>

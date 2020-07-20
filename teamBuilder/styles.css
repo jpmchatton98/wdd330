@@ -1,0 +1,45 @@
+select
+{
+	width: 97.5vw;
+}
+.pokeball, .teamMember
+{
+	width: 15vw;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+.member
+{
+	width: 15vw;
+}
+.teamMember
+{
+	margin-right: 0.1vw;
+	margin-left: 0.1vw;
+}
+
+#teamArea
+{
+	display: flex;
+	flex-flow: row nowrap;
+}
+#team, #pokeballs
+{
+	box-sizing: border-box;
+	width: 100%;
+	flex: none;
+}
+#team
+{
+	text-align: center;
+}
+#pokeballs
+{
+	margin-left: -100%;
+	z-index: -1000;
+	text-align: center;
+}
+#masterList
+{
+	text-align: center;
+}
