@@ -119,7 +119,7 @@ function addToTeam(i)
 }
 function removeFromTeam(id)
 {
-	if(teamSize > 0 && id + 1 >= teamSize)
+	if(teamSize > 0 && !(id >= teamSize))
 	{
 		team.splice(id, 1);
 		
