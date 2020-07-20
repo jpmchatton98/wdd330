@@ -369,38 +369,46 @@ function buildDex()
 		let url = primitive[i].pokemon_species.url.split("/");
 		let pokedexNum = url[url.length - 2];
 		
-		let pokemon = 0;
+		let newPokemon = 0;
+		let currPokemon = 0;
 		
 		if(!megas && !regionals)
 		{
-			pokemon = pokedex.filter(element => (element.number === pokedexNum && !element.name.includes("-mega") && !element.name.includes("-alola")));
+			currPokemon = pokedex.filter(element => (element.number === pokedexNum && !element.name.includes("-mega") && !element.name.includes("-alola")));
 		}
 		else if(megas && !regionals)
 		{
-			pokemon = pokedex.filter(element => (element.number === pokedexNum && !element.name.includes("-alola")));
+			currPokemon = pokedex.filter(element => (element.number === pokedexNum && !element.name.includes("-alola")));
 		}
 		else if(!megas && regionals)
 		{
-			pokemon = pokedex.filter(element => (element.number === pokedexNum && !element.name.includes("-mega")));
+			currPokemon = pokedex.filter(element => (element.number === pokedexNum && !element.name.includes("-mega")));
 		}
 		else
 		{
-			pokemon = pokedex.filter(element => element.number === pokedexNum);
+			currPokemon = pokedex.filter(element => element.number === pokedexNum);
 		}
 		
-		innerpokedex.push.apply(innerpokedex, pokemon);
+		for(let j = 0; j < currPokemon.length; j++)
+		{
+			newPokemon = new pokemon(currPokemon[j].number, currPokemon[j].name, currPokemon[j].formid);
+			newPokemon.type1 = currPokemon[j].type1;
+			newPokemon.type2 = currPokemon[j].type2;
+			
+			innerpokedex[innerpokedex.length] = newPokemon;
+		}
 	}
 	
 	if(!fairies)
 	{
 		for(let i = 0; i < preFairies.length; i++)
 		{
-			let pokemon = innerpokedex.findIndex(element => (element.formid == preFairies[i].formid));
+			let currPokemon = innerpokedex.findIndex(element => (element.formid == preFairies[i].formid));
 			
-			if(pokemon != -1)
+			if(currPokemon != -1)
 			{
-				innerpokedex[pokemon].type1 = preFairies[i].type1;
-				innerpokedex[pokemon].type2 = preFairies[i].type2;
+				innerpokedex[currPokemon].type1 = preFairies[i].type1;
+				innerpokedex[currPokemon].type2 = preFairies[i].type2;
 			}
 		}
 	}
@@ -486,7 +494,8 @@ function getPokemon()
 														element.name != "porygon" &&
 														!element.name.includes("tapu") &&
 														poke.name != "klinklang") &&
-													    poke.name != "volcarona"));
+													    poke.name != "volcarona") &&
+														poke.name != "kabutops");
 		
 		if(excluded.find(element => (poke.name === unCapitalize(element))) == undefined)
 		{
